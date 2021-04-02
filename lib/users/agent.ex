@@ -15,14 +15,14 @@ defmodule Flightex.Users.Agent do
     {:ok, uuid}
   end
 
-  def get(cpf), do: Agent.get(__MODULE__, &get_user(&1, cpf))
+  def get(id), do: Agent.get(__MODULE__, &get_user(&1, id))
 
   def list_all, do: Agent.get(__MODULE__, & &1)
 
   defp update_state(state, %User{id: uuid} = user), do: Map.put(state, uuid, user)
 
-  defp get_user(state, cpf) do
-    case Map.get(state, cpf) do
+  defp get_user(state, id) do
+    case Map.get(state, id) do
       nil -> {:error, "User not found"}
       user -> {:ok, user}
     end
